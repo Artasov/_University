@@ -5,56 +5,53 @@
 1. In the `terminal` (Windows/Linux).
 
     ```
-    git clone https://github.com/Artasov/Chat.git
-    cd Chat
+    git clone https://github.com/Artasov/_University.git
+    cd _University
     ```
-3. Go to:
-    - http://localhost:8000/ - to get started.
+2. Quick start `Postgres` and `Redis`.
+    ```
+    docker run -d --name redis-server -p 6379:6379 redis/redis-stack-server:latest
+    docker run --name postgres-server -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=db -d postgres:latest
+    ```
+3. In the folder with the file `manage.py`.
+    ```
+    python manage.py runserver
+    WIN: celery -A config worker -l INFO --pool=solo
+    LINUX: celery -A config worker -l INFO
+    ```
+4. Go to:
+    - http://localhost:8000/ - Redirect to API docs (Swagger).
     - http://localhost:8000/docs/ - API docs (Swagger).
     - http://localhost:8000/admin - Admin Panel
-    - http://localhost:8000/file-manager/ - File Manager
-    - http://localhost:8000/mkdir/ - Make Dir
-    - http://localhost:8000/upload/ - Upload Files
-    - http://localhost:9000/ - Minio Storage
-    - http://localhost:9001/ - Minio GUI
-    - http://localhost:5432/ - Postgres
     
-4. The environment variables are specified in the .env file.
+6. For create test case:
     ```
-    MINIO_ACCESS_KEY="adminadmin"
-    MINIO_SECRET_KEY="adminadmin"
-    MINIO_ROOT_USER="adminadmin"
-    MINIO_ROOT_PASSWORD="adminadmin"
-    POSTGRES_NAME="adminadmin"
-    POSTGRES_USER="adminadmin"
-    POSTGRES_PASSWORD="adminadmin"
-    POSTGRES_PORT="5432"
-    DJANGO_SUPERUSER_USERNAME="adminadmin"
-    DJANGO_SUPERUSER_PASSWORD="adminadmin"
-    DJANGO_SUPERUSER_EMAIL="adminadmin@admin.admin"
-    DEBUG="1"
-    NAME_MAIN_FILEMANAGER_DIR="MAIN"
+    python manage.py init_university_test_case
     ```
-
-4. Automatically created users:
     ```
-    admin - adminadmin:adminadmin
-    user1 - user1:user1
-    user2 - user2:user2
+    Generated(login:pass):
+        Superuser
+            admin:1
+        Administrator 
+            a1:1
+        Curator 
+            c1:1   
+        Curator 
+            c2:1
+        50 students  
+            s0,s1,s2,...,s49:1
+        
+        Other tables are also slightly filled in.
     ```
 
-5. The environment variables are specified in the .env file.
+7. The environment variables are specified in the .env file.
     ```
-    POSTGRES_NAME="adminadmin"
-    POSTGRES_USER="adminadmin"
-    POSTGRES_PASSWORD="adminadmin"
-    POSTGRES_PORT="5432"
-    DJANGO_SUPERUSER_USERNAME="adminadmin"
-    DJANGO_SUPERUSER_PASSWORD="adminadmin"
-    DJANGO_SUPERUSER_EMAIL="adminadmin@admin.admin"
-    DEBUG="1"
+    DEBUG=1
+    DB_NAME=db
+    DB_USERNAME=root
+    DB_PASSWORD=root
+    DB_HOST=localhost
+    DB_PORT=5432
+    REDIS_HOST=localhost
+    REDIS_PORT=6379
     ```
-   
-    Использовать Postgres при больших объемах не эффективно, 
-    если бы это был реальный проект я бы посмотрел на nosql бд.
-    Пагинация реализована.
