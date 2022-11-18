@@ -15,6 +15,8 @@
     ```
 3. Install all dependencies and in the folder with the file `manage.py`.
     ```
+    python manage.py makemigrations
+    python manage.py migrate
     python manage.py runserver
     WIN: celery -A config worker -l INFO --pool=solo
     LINUX: celery -A config worker -l INFO
