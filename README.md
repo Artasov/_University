@@ -13,7 +13,7 @@
     docker run -d --name redis-server -p 6379:6379 redis/redis-stack-server:latest
     docker run --name postgres-server -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=db -d postgres:latest
     ```
-3. In the folder with the file `manage.py`.
+3. Install all dependencies and in the folder with the file `manage.py`.
     ```
     python manage.py runserver
     WIN: celery -A config worker -l INFO --pool=solo
