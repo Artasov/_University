@@ -54,7 +54,9 @@ def GenerateReportAPIView(request):
     }, status=status.HTTP_200_OK)
 
 
-class ReportViewSet(ModelViewSet):
+class ReportViewSet(mixins.RetrieveModelMixin,
+                    mixins.ListModelMixin,
+                    GenericViewSet):
     permission_classes = [IsAdministrator | IsAdminUser]
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
@@ -78,9 +80,10 @@ class CuratorViewSet(mixins.CreateModelMixin,
     serializer_class = UserSerializer
 
 
-class StudentViewSet(mixins.CreateModelMixin, mixins.RetrieveModelMixin,
+class StudentViewSet(mixins.CreateModelMixin,
+                     mixins.RetrieveModelMixin,
                      mixins.UpdateModelMixin,
-                     mixins.DestroyModelMixin,
+                     # mixins.DestroyModelMixin,
                      # Мне, кажется, что пользователей удалять куратор не может.
                      mixins.ListModelMixin,
                      GenericViewSet):
